@@ -86,16 +86,20 @@ public:
 	// Reads file 'filename' and puts header's data to 'header_ptr' address.
 	// Also checks header validity, returns 'WAV_OK' on success.
 
-	wav_errors_e readHeader(const char *filename);
+	void readHeader(const char *filename);
 
 	// Checks header validity.
 	// Returns 'WAV_OK' on success.
-	wav_headers_errors_e checkHeader(size_t file_size_bytes) const;
+	bool checkHeader(size_t file_size_bytes) const;
 
 	// Fills header information, using input parameters. This function calls prefill_header() itself.
-	wav_errors_e fillHeader(int chan_count, int bits_per_sample, int sample_rate, int samples_count_per_chan);
+	void fillHeader(int chan_count, int bits_per_sample, int sample_rate, int samples_count_per_chan);
 
 	// Fills 'header_ptr' with default values.
 	void prefillHeader();
 
 };
+
+
+
+
