@@ -1,28 +1,7 @@
 #pragma once 
 #include <exception>
 
-enum wav_headers_errors_e {
-	HEADER_OK = 0,
-	HEADER_RIFF_ERROR,
-	HEADER_FILE_SIZE_ERROR,
-	HEADER_WAVE_ERROR,
-	HEADER_FMT_ERROR,
-	HEADER_NOT_PCM,
-	HEADER_SUBCHUNK1_ERROR,
-	HEADER_BYTES_RATE_ERROR,
-	HEADER_BLOCK_ALIGN_ERROR,
-	HEADER_SUBCHUNK2_SIZE_ERROR
-};
-
-enum wav_errors_e {
-	WAV_OK = 0,
-	IO_ERROR,
-	BAD_FORMAT,
-	UNSUPPORTED_FORMAT,
-	BAD_PARAMS,
-	DATA_SIZE_ERROR
-};
-
+// wav header's exceptions
 class headerRIFFError : public std::exception {
 	virtual const char* what() const throw()
 	{
@@ -65,6 +44,13 @@ class headerSubchunk1Error : public std::exception {
 	}
 };
 
+class headerSubchunk2SizeError : public std::exception {
+	virtual const char* what() const throw()
+	{
+		return "Header Subchunk2 size Error";
+	}
+};
+
 class headerBytesRateError : public std::exception {
 	virtual const char* what() const throw()
 	{
@@ -76,5 +62,42 @@ class headerBlockAlignError : public std::exception {
 	virtual const char* what() const throw()
 	{
 		return "Header Block Align Error";
+	}
+};
+
+// wav exceptions
+
+class  inputOutputException: public std::exception {
+	const char* what() const throw()
+	{
+		return "file was not found";
+	}
+};
+
+class badFormatException: public std::exception {
+	virtual const char* what() const throw()
+	{
+		return "Bad file format";
+	}
+};
+
+class unsupportedFormatException: public std::exception {
+	virtual const char* what() const throw()
+	{
+		return "unsupported format";
+	}
+};
+
+class badParametrsException: public std::exception {
+	virtual const char* what() const throw()
+	{
+		return "Bad parametrs";
+	}
+};
+
+class dataSizeException: public std::exception {
+	virtual const char* what() const throw()
+	{
+		return "data size exception";
 	}
 };
