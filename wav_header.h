@@ -1,4 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #pragma once
+
 
 #include "wavHeaderExceptions.cpp"
 
@@ -10,71 +13,71 @@
 //
 
 
-// Ñòðóêòóðà, îïèñûâàþùàÿ çàãîëîâîê WAV ôàéëà.
+// Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð°, Ð¾Ð¿Ð¸ÑÑ‹Ð²Ð°ÑŽÑ‰Ð°Ñ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº WAV Ñ„Ð°Ð¹Ð»Ð°.
 class wav_header_s
 {
 public:
 	struct Date{
-		// WAV-ôîðìàò íà÷èíàåòñÿ ñ RIFF-çàãîëîâêà:
+		// WAV-Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ Ð½Ð°Ñ‡Ð¸Ð½Ð°ÐµÑ‚ÑÑ Ñ RIFF-Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ°:
 
-		// Ñîäåðæèò ñèìâîëû "RIFF" â ASCII êîäèðîâêå
-		// (0x52494646 â big-endian ïðåäñòàâëåíèè)
+		// Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ "RIFF" Ð² ASCII ÐºÐ¾Ð´Ð¸Ñ€Ð¾Ð²ÐºÐµ
+		// (0x52494646 Ð² big-endian Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ð¸)
 		char chunkId[4];
 
-		// 36 + subchunk2Size, èëè áîëåå òî÷íî:
+		// 36 + subchunk2Size, Ð¸Ð»Ð¸ Ð±Ð¾Ð»ÐµÐµ Ñ‚Ð¾Ñ‡Ð½Ð¾:
 		// 4 + (8 + subchunk1Size) + (8 + subchunk2Size)
-		// Ýòî îñòàâøèéñÿ ðàçìåð öåïî÷êè, íà÷èíàÿ ñ ýòîé ïîçèöèè.
-		// Èíà÷å ãîâîðÿ, ýòî ðàçìåð ôàéëà - 8, òî åñòü,
-		// èñêëþ÷åíû ïîëÿ chunkId è chunkSize.
+		// Ð­Ñ‚Ð¾ Ð¾ÑÑ‚Ð°Ð²ÑˆÐ¸Ð¹ÑÑ Ñ€Ð°Ð·Ð¼ÐµÑ€ Ñ†ÐµÐ¿Ð¾Ñ‡ÐºÐ¸, Ð½Ð°Ñ‡Ð¸Ð½Ð°Ñ Ñ ÑÑ‚Ð¾Ð¹ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ð¸.
+		// Ð˜Ð½Ð°Ñ‡Ðµ Ð³Ð¾Ð²Ð¾Ñ€Ñ, ÑÑ‚Ð¾ Ñ€Ð°Ð·Ð¼ÐµÑ€ Ñ„Ð°Ð¹Ð»Ð° - 8, Ñ‚Ð¾ ÐµÑÑ‚ÑŒ,
+		// Ð¸ÑÐºÐ»ÑŽÑ‡ÐµÐ½Ñ‹ Ð¿Ð¾Ð»Ñ chunkId Ð¸ chunkSize.
 		unsigned long chunkSize;
 
-		// Ñîäåðæèò ñèìâîëû "WAVE"
-		// (0x57415645 â big-endian ïðåäñòàâëåíèè)
+		// Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ "WAVE"
+		// (0x57415645 Ð² big-endian Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ð¸)
 		char format[4];
 
-		// Ôîðìàò "WAVE" ñîñòîèò èç äâóõ ïîäöåïî÷åê: "fmt " è "data":
-		// Ïîäöåïî÷êà "fmt " îïèñûâàåò ôîðìàò çâóêîâûõ äàííûõ:
+		// Ð¤Ð¾Ñ€Ð¼Ð°Ñ‚ "WAVE" ÑÐ¾ÑÑ‚Ð¾Ð¸Ñ‚ Ð¸Ð· Ð´Ð²ÑƒÑ… Ð¿Ð¾Ð´Ñ†ÐµÐ¿Ð¾Ñ‡ÐµÐº: "fmt " Ð¸ "data":
+		// ÐŸÐ¾Ð´Ñ†ÐµÐ¿Ð¾Ñ‡ÐºÐ° "fmt " Ð¾Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÑ‚ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ Ð·Ð²ÑƒÐºÐ¾Ð²Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ…:
 
-		// Ñîäåðæèò ñèìâîëû "fmt "
-		// (0x666d7420 â big-endian ïðåäñòàâëåíèè)
+		// Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ "fmt "
+		// (0x666d7420 Ð² big-endian Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ð¸)
 		char subchunk1Id[4];
 
-		// 16 äëÿ ôîðìàòà PCM.
-		// Ýòî îñòàâøèéñÿ ðàçìåð ïîäöåïî÷êè, íà÷èíàÿ ñ ýòîé ïîçèöèè.
+		// 16 Ð´Ð»Ñ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð° PCM.
+		// Ð­Ñ‚Ð¾ Ð¾ÑÑ‚Ð°Ð²ÑˆÐ¸Ð¹ÑÑ Ñ€Ð°Ð·Ð¼ÐµÑ€ Ð¿Ð¾Ð´Ñ†ÐµÐ¿Ð¾Ñ‡ÐºÐ¸, Ð½Ð°Ñ‡Ð¸Ð½Ð°Ñ Ñ ÑÑ‚Ð¾Ð¹ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ð¸.
 		unsigned long subchunk1Size;
 
-		// Àóäèî ôîðìàò, ïîëíûé ñïèñîê ìîæíî ïîëó÷èòü çäåñü http://audiocoding.ru/wav_formats.txt
-		// Äëÿ PCM = 1 (òî åñòü, Ëèíåéíîå êâàíòîâàíèå).
-		// Çíà÷åíèÿ, îòëè÷àþùèåñÿ îò 1, îáîçíà÷àþò íåêîòîðûé ôîðìàò ñæàòèÿ.
+		// ÐÑƒÐ´Ð¸Ð¾ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚, Ð¿Ð¾Ð»Ð½Ñ‹Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¼Ð¾Ð¶Ð½Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð·Ð´ÐµÑÑŒ http://audiocoding.ru/wav_formats.txt
+		// Ð”Ð»Ñ PCM = 1 (Ñ‚Ð¾ ÐµÑÑ‚ÑŒ, Ð›Ð¸Ð½ÐµÐ¹Ð½Ð¾Ðµ ÐºÐ²Ð°Ð½Ñ‚Ð¾Ð²Ð°Ð½Ð¸Ðµ).
+		// Ð—Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ, Ð¾Ñ‚Ð»Ð¸Ñ‡Ð°ÑŽÑ‰Ð¸ÐµÑÑ Ð¾Ñ‚ 1, Ð¾Ð±Ð¾Ð·Ð½Ð°Ñ‡Ð°ÑŽÑ‚ Ð½ÐµÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ ÑÐ¶Ð°Ñ‚Ð¸Ñ.
 		unsigned short audioFormat;
 
-		// Êîëè÷åñòâî êàíàëîâ. Ìîíî = 1, Ñòåðåî = 2 è ò.ä.
+		// ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÐºÐ°Ð½Ð°Ð»Ð¾Ð². ÐœÐ¾Ð½Ð¾ = 1, Ð¡Ñ‚ÐµÑ€ÐµÐ¾ = 2 Ð¸ Ñ‚.Ð´.
 		unsigned short numChannels;
 
-		// ×àñòîòà äèñêðåòèçàöèè. 8000 Ãö, 44100 Ãö è ò.ä.
+		// Ð§Ð°ÑÑ‚Ð¾Ñ‚Ð° Ð´Ð¸ÑÐºÑ€ÐµÑ‚Ð¸Ð·Ð°Ñ†Ð¸Ð¸. 8000 Ð“Ñ†, 44100 Ð“Ñ† Ð¸ Ñ‚.Ð´.
 		unsigned long sampleRate;
 
 		// sampleRate * numChannels * bitsPerSample/8
 		unsigned long byteRate;
 
 		// numChannels * bitsPerSample/8
-		// Êîëè÷åñòâî áàéò äëÿ îäíîãî ñýìïëà, âêëþ÷àÿ âñå êàíàëû.
+		// ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð±Ð°Ð¹Ñ‚ Ð´Ð»Ñ Ð¾Ð´Ð½Ð¾Ð³Ð¾ ÑÑÐ¼Ð¿Ð»Ð°, Ð²ÐºÐ»ÑŽÑ‡Ð°Ñ Ð²ÑÐµ ÐºÐ°Ð½Ð°Ð»Ñ‹.
 		unsigned short blockAlign;
 
-		// Òàê íàçûâàåìàÿ "ãëóáèíàÿ" èëè òî÷íîñòü çâó÷àíèÿ. 8 áèò, 16 áèò è ò.ä.
+		// Ð¢Ð°Ðº Ð½Ð°Ð·Ñ‹Ð²Ð°ÐµÐ¼Ð°Ñ "Ð³Ð»ÑƒÐ±Ð¸Ð½Ð°Ñ" Ð¸Ð»Ð¸ Ñ‚Ð¾Ñ‡Ð½Ð¾ÑÑ‚ÑŒ Ð·Ð²ÑƒÑ‡Ð°Ð½Ð¸Ñ. 8 Ð±Ð¸Ñ‚, 16 Ð±Ð¸Ñ‚ Ð¸ Ñ‚.Ð´.
 		unsigned short bitsPerSample;
 
-		// Ïîäöåïî÷êà "data" ñîäåðæèò àóäèî-äàííûå è èõ ðàçìåð.
+		// ÐŸÐ¾Ð´Ñ†ÐµÐ¿Ð¾Ñ‡ÐºÐ° "data" ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ Ð°ÑƒÐ´Ð¸Ð¾-Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¸ Ð¸Ñ… Ñ€Ð°Ð·Ð¼ÐµÑ€.
 
-		// Ñîäåðæèò ñèìâîëû "data"
-		// (0x64617461 â big-endian ïðåäñòàâëåíèè)
+		// Ð¡Ð¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ "data"
+		// (0x64617461 Ð² big-endian Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð»ÐµÐ½Ð¸Ð¸)
 		char subchunk2Id[4];
 
 		// numSamples * numChannels * bitsPerSample/8
-		// Êîëè÷åñòâî áàéò â îáëàñòè äàííûõ.
+		// ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð±Ð°Ð¹Ñ‚ Ð² Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð´Ð°Ð½Ð½Ñ‹Ñ….
 		unsigned long subchunk2Size;
 	};
-	// Äàëåå ñëåäóþò íåïîñðåäñòâåííî Wav äàííûå.
+	// Ð”Ð°Ð»ÐµÐµ ÑÐ»ÐµÐ´ÑƒÑŽÑ‚ Ð½ÐµÐ¿Ð¾ÑÑ€ÐµÐ´ÑÑ‚Ð²ÐµÐ½Ð½Ð¾ Wav Ð´Ð°Ð½Ð½Ñ‹Ðµ.
 
 	Date date;
 
@@ -84,7 +87,38 @@ public:
 		memset(&date, 0, sizeof(wav_header_s::Date));
 	}
 
+	// does this function refer to wav header?
+	// Reads file 'filename' and puts header's data to 'header_ptr' address.
+	// Also checks header validity, returns 'WAV_OK' on success.
 
+	wav_errors_e readHeader(const char *filename)
+	{
+		printf(">>>> read_header( %s )\n", filename);
+		nullHeader(); // Fill header with zeroes.
+
+		FILE* f = fopen(filename, "rb");
+		if (!f) {
+			return IO_ERROR;
+		}
+
+		size_t blocks_read = fread(&date, sizeof(wav_header_s::Date), 1, f);
+		if (blocks_read != 1) {
+			// can't read header, because the file is too small.
+			return BAD_FORMAT;
+		}
+
+		fseek(f, 0, SEEK_END); // seek to the end of the file
+		size_t file_size = ftell(f); // current position is a file size!
+		fclose(f);
+
+		if (checkHeader(file_size) != HEADER_OK) {
+			return BAD_FORMAT;
+		}
+		else {
+			return WAV_OK;
+		}
+	}
+	
 	// Checks header validity.
 	// Returns 'WAV_OK' on success.
 	wav_headers_errors_e checkHeader(size_t file_size_bytes) const
@@ -161,8 +195,6 @@ public:
 		return HEADER_OK;
 	}
 
-
-
 	// Fills header information, using input parameters. This function calls prefill_header() itself.
 	wav_errors_e fillHeader(int chan_count, int bits_per_sample, int sample_rate, int samples_count_per_chan)
 	{
@@ -222,7 +254,3 @@ public:
 	}
 
 };
-
-
-
-
