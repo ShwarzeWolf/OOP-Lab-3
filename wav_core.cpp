@@ -27,7 +27,7 @@ wav_errors_e wav_core::readDate(const char* filename, std::vector<std::vector<sh
 {
 	printf(">>>> extract_data_int16( %s )\n", filename);
 	wav_errors_e err;
-	err = readHeader(filename);
+	err = header.readHeader(filename);
 	if (err != WAV_OK) {
 		// Problems with reading a header.
 		return err;
@@ -120,34 +120,6 @@ wav_errors_e wav_core::createWav(const char* filename, int sample_rate, const st
 	return WAV_OK;
 }
 
-// does this function refer to wav header?
-wav_errors_e wav_core::readHeader(const char *filename)
-{
-	printf(">>>> read_header( %s )\n", filename);
-	header.nullHeader(); // Fill header with zeroes.
-
-	FILE* f = fopen(filename, "rb");
-	if (!f) {
-		return IO_ERROR;
-	}
-
-	size_t blocks_read = fread(&header, sizeof(wav_header_s::Date), 1, f);
-	if (blocks_read != 1) {
-		// can't read header, because the file is too small.
-		return BAD_FORMAT;
-	}
-
-	fseek(f, 0, SEEK_END); // seek to the end of the file
-	size_t file_size = ftell(f); // current position is a file size!
-	fclose(f);
-
-	if (header.checkHeader(file_size) != HEADER_OK) {
-		return BAD_FORMAT;
-	}
-	else {
-		return WAV_OK;
-	}
-}
 
 wav_errors_e wav_core::makeMono(const std::vector<std::vector<short> > &source, std::vector< std::vector<short> > &dest_mono)
 {
